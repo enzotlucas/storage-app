@@ -9,41 +9,47 @@
 <p>
     <a asp-action="Create">Cadastrar nova venda</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Anotação
-            </th>
-            <th>
-                Preço total
-            </th>
-            <th>
-                Cliente
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Sales) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.FirstName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
-<partial name="ActivityHistory.cshtml" />
+<section class="page-content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Anotação
+                </th>
+                <th>
+                    Preço total
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Sales)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.Customer.Id">@Html.DisplayFor(modelItem => item.Customer.FirstName)</a>                        
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+
+<section class="activity-history">
+    <partial name="ActivityHistory.cshtml" />
+</section>
