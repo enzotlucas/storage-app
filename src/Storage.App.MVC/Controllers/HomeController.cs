@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Storage.App.MVC.Controllers
 {
-    public class HomeController : Controller
+    public sealed class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 

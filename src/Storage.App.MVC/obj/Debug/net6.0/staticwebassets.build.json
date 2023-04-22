@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Rv3sUCkQBP8RY89LUFCm1yf9QSXB6wOBoIHCRckWkGE=",
+  "Hash": "9B1a793B2GLzojKPiMw917Rd9h4Ox0j/GUSoitDvuro=",
   "Source": "Storage.App.MVC",
   "BasePath": "_content/Storage.App.MVC",
   "Mode": "Default",
@@ -16,6 +16,40 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Storage.App.MVC.styles.css",
+      "SourceId": "Storage.App.MVC",
+      "SourceType": "Computed",
+      "ContentRoot": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "BasePath": "_content/Storage.App.MVC",
+      "RelativePath": "Storage.App.MVC.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Storage.App.MVC.styles.css"
+    },
+    {
+      "Identity": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Storage.App.MVC.bundle.scp.css",
+      "SourceId": "Storage.App.MVC",
+      "SourceType": "Computed",
+      "ContentRoot": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "BasePath": "_content/Storage.App.MVC",
+      "RelativePath": "Storage.App.MVC.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Storage.App.MVC.bundle.scp.css"
+    },
     {
       "Identity": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\wwwroot\\css\\site.css",
       "SourceId": "Storage.App.MVC",

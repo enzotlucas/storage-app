@@ -2,11 +2,11 @@
 {
     public interface IBaseRepository<T> : IDisposable 
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(Guid id);
-        Task<T> CreateAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task<bool> ExistsAsync(Guid id);
-        Task DeleteAsync(T entity);
+        Task<IEnumerable<T>> GetAllAsync(Guid enterpriseId, CancellationToken cancellationToken);
+        Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<T> CreateAsync(T entity, CancellationToken cancellationToken);
+        Task UpdateAsync(T entity, CancellationToken cancellationToken);
+        Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken);
+        Task DeleteAsync(T entity, CancellationToken cancellationToken);
     }
 }

@@ -4,7 +4,7 @@ using Storage.App.MVC.Core.Customer;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public class CustomerMapping : IEntityTypeConfiguration<CustomerEntity>
+    public sealed class CustomerMapping : IEntityTypeConfiguration<CustomerEntity>
     {
         public void Configure(EntityTypeBuilder<CustomerEntity> builder)
         {

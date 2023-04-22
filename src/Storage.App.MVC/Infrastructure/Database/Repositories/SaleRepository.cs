@@ -3,7 +3,7 @@ using Storage.App.MVC.Core.Sale;
 
 namespace Storage.App.MVC.Infrastructure.Database.Repositories
 {
-    public class SaleRepository : ISaleRepository
+    public sealed class SaleRepository : ISaleRepository
     {
         private readonly SqlServerContext _context;
 
@@ -12,48 +12,49 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<SaleEntity>> GetAllAsync()
+        public async Task<IEnumerable<SaleEntity>> GetAllAsync(Guid enterpriseId, CancellationToken cancellationToken)
         {
-            var sales = await _context.Sales.Include(s => s.Customer)
+            var sales = await _context.Sales.Where(s => s.EnterpriseId == enterpriseId)
+                                            .Include(s => s.Customer)
                                             .Include(s => s.Enterprise)
                                             .Include(s => s.SaleItems)
-                                            .ToListAsync();
+                                            .ToListAsync(cancellationToken);
 
             return sales.Count > 0 ? sales : Enumerable.Empty<SaleEntity>();
         }
 
-        public async Task<SaleEntity> GetByIdAsync(Guid id)
+        public async Task<SaleEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var sale = await _context.Sales.Include(s => s.Customer)
                                             .Include(s => s.Enterprise)
                                             .Include(s => s.SaleItems)
-                                            .FirstOrDefaultAsync(s => s.Id == id);
+                                            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
             return sale ?? new SaleEntity();
         }
 
-        public async Task<SaleEntity> CreateAsync(SaleEntity sale)
+        public async Task<SaleEntity> CreateAsync(SaleEntity sale, CancellationToken cancellationToken)
         {
             sale.Id = Guid.NewGuid();
 
-            await _context.AddAsync(sale);
+            await _context.AddAsync(sale, cancellationToken);
 
             return sale;
         }
 
-        public async Task UpdateAsync(SaleEntity sale)
+        public async Task UpdateAsync(SaleEntity sale, CancellationToken cancellationToken)
         {
-            await Task.Run(() => _context.Update(sale));
+            await Task.Run(() => _context.Update(sale), cancellationToken);
         }
 
-        public async Task<bool> ExistsAsync(Guid id)
+        public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Sales.AnyAsync(s => s.Id == id);
+            return await _context.Sales.AnyAsync(s => s.Id == id, cancellationToken);
         }
 
-        public async Task DeleteAsync(SaleEntity sale)
+        public async Task DeleteAsync(SaleEntity sale, CancellationToken cancellationToken)
         {
-            await Task.Run(() => _context.Sales.Remove(sale));
+            await Task.Run(() => _context.Sales.Remove(sale), cancellationToken);
         }
 
         public void Dispose()

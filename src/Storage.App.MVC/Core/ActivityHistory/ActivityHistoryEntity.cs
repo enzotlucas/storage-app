@@ -1,6 +1,6 @@
 ﻿namespace Storage.App.MVC.Core.ActivityHistory
 {
-    public class ActivityHistoryEntity
+    public sealed class ActivityHistoryEntity
     {
         public Guid Id { get; set; }        
         public ActivityType ActivityType { get; set; }

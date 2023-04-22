@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Storage.App.MVC.UseCases.ActivityHistory
 {
-    public class GetActivityById
+    public sealed class GetActivityById
     {
 
     }

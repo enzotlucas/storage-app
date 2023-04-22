@@ -2,6 +2,9 @@
 {
     public enum ActivityType
     {
-
+        Sale,
+        Customer,
+        Product,
+        Enterprise
     }
 }

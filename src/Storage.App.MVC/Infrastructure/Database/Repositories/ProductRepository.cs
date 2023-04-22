@@ -3,7 +3,7 @@ using Storage.App.MVC.Core.Product;
 
 namespace Storage.App.MVC.Infrastructure.Database.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public sealed class ProductRepository : IProductRepository
     {
         private readonly SqlServerContext _context;
 
@@ -12,44 +12,45 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ProductEntity>> GetAllAsync()
+        public async Task<IEnumerable<ProductEntity>> GetAllAsync(Guid enterpriseId, CancellationToken cancellationToken)
         {
-            var products = await _context.Products.Include(s => s.Enterprise)
-                                                  .ToListAsync();
+            var products = await _context.Products.Where(p => p.EnterpriseId == enterpriseId)
+                                                  .Include(s => s.Enterprise)
+                                                  .ToListAsync(cancellationToken);
 
             return products.Count > 0 ? products : Enumerable.Empty<ProductEntity>();
         }
 
-        public async Task<ProductEntity> GetByIdAsync(Guid id)
+        public async Task<ProductEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var product = await _context.Products.Include(s => s.Enterprise)
-                                                 .FirstOrDefaultAsync(s => s.Id == id);
+                                                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
             return product ?? new ProductEntity();
         }
 
-        public async Task<ProductEntity> CreateAsync(ProductEntity product)
+        public async Task<ProductEntity> CreateAsync(ProductEntity product, CancellationToken cancellationToken)
         {
             product.Id = Guid.NewGuid();
 
-            await _context.AddAsync(product);
+            await _context.AddAsync(product, cancellationToken);
 
             return product;
         }
 
-        public async Task UpdateAsync(ProductEntity product)
+        public async Task UpdateAsync(ProductEntity product, CancellationToken cancellationToken)
         {
-            await Task.Run(() => _context.Update(product));
+            await Task.Run(() => _context.Update(product), cancellationToken);
         }
 
-        public async Task<bool> ExistsAsync(Guid id)
+        public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Products.AnyAsync(s => s.Id == id);
+            return await _context.Products.AnyAsync(s => s.Id == id, cancellationToken);
         }
 
-        public async Task DeleteAsync(ProductEntity product)
+        public async Task DeleteAsync(ProductEntity product, CancellationToken cancellationToken)
         {
-            await Task.Run(() => _context.Products.Remove(product));
+            await Task.Run(() => _context.Products.Remove(product), cancellationToken);
         }
 
         public void Dispose()

@@ -2,8 +2,8 @@
 {
     public interface IActivityHistoryRepository : IDisposable
     {
-        Task<IEnumerable<ActivityHistoryEntity>> GetAllAsync();
-        Task<ActivityHistoryEntity> GetByIdAsync(Guid id);
-        Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory);
+        Task<IEnumerable<ActivityHistoryEntity>> GetByAcitivityTypeAsync(Guid enterpriseId, ActivityType activityType, CancellationToken cancellationToken);
+        Task<ActivityHistoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory, CancellationToken cancellationToken);
     }
 }

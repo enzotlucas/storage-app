@@ -4,7 +4,7 @@ using Storage.App.MVC.Core.Enterprise;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public class EnterpriseMapping : IEntityTypeConfiguration<EnterpriseEntity>
+    public sealed class EnterpriseMapping : IEntityTypeConfiguration<EnterpriseEntity>
     {
         public void Configure(EntityTypeBuilder<EnterpriseEntity> builder)
         {

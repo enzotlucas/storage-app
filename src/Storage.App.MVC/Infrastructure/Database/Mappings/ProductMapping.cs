@@ -5,7 +5,7 @@ using Storage.App.MVC.Core.Enterprise;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public class ProductMapping : IEntityTypeConfiguration<ProductEntity>
+    public sealed class ProductMapping : IEntityTypeConfiguration<ProductEntity>
     {
         public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {

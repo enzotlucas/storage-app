@@ -10,7 +10,7 @@ using Storage.App.MVC.Infrastructure.Database;
 
 namespace Storage.App.MVC.Controllers
 {
-    public class EnterprisesController : Controller
+    public sealed class EnterprisesController : Controller
     {
         private readonly SqlServerContext _context;
 

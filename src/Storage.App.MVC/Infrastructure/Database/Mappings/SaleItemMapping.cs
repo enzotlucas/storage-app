@@ -4,7 +4,7 @@ using Storage.App.MVC.Core.Sale;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public class SaleItemMapping : IEntityTypeConfiguration<SaleItemEntity>
+    public sealed class SaleItemMapping : IEntityTypeConfiguration<SaleItemEntity>
     {
         public void Configure(EntityTypeBuilder<SaleItemEntity> builder)
         {

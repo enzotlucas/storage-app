@@ -5,7 +5,7 @@ using Storage.App.MVC.Core.ActivityHistory;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public class ActivityHistoryMapping : IEntityTypeConfiguration<ActivityHistoryEntity>
+    public sealed class ActivityHistoryMapping : IEntityTypeConfiguration<ActivityHistoryEntity>
     {
         public void Configure(EntityTypeBuilder<ActivityHistoryEntity> builder)
         {

@@ -3,7 +3,7 @@ using Storage.App.MVC.Core.ActivityHistory;
 
 namespace Storage.App.MVC.Infrastructure.Database.Repositories
 {
-    public class ActivityHistoryRepository : IActivityHistoryRepository
+    public sealed class ActivityHistoryRepository : IActivityHistoryRepository
     {
         private readonly SqlServerContext _context;
 
@@ -12,27 +12,29 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<ActivityHistoryEntity>> GetAllAsync()
+        public async Task<IEnumerable<ActivityHistoryEntity>> GetByAcitivityTypeAsync(Guid enterpriseId, ActivityType activityType, CancellationToken cancellationToken)
         {
-            var activityHistory = await _context.ActivityHistory.Include(s => s.Enterprise)
-                                                      .ToListAsync();
+            var activityHistory = await _context.ActivityHistory
+                                                      .Where(a => a.EnterpriseId == enterpriseId && a.ActivityType == activityType)
+                                                      .Include(s => s.Enterprise)
+                                                      .ToListAsync(cancellationToken);
 
             return activityHistory.Count > 0 ? activityHistory : Enumerable.Empty<ActivityHistoryEntity>();
         }
 
-        public async Task<ActivityHistoryEntity> GetByIdAsync(Guid id)
+        public async Task<ActivityHistoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var activityHistory = await _context.ActivityHistory.Include(s => s.Enterprise)
-                                                     .FirstOrDefaultAsync(s => s.Id == id);
+                                                     .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
             return activityHistory ?? new ActivityHistoryEntity();        
         }
 
-        public async Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory)
+        public async Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory, CancellationToken cancellationToken)
         {
             activityHistory.Id = Guid.NewGuid();
 
-            await _context.AddAsync(activityHistory);
+            await _context.AddAsync(activityHistory, cancellationToken);
 
             return activityHistory;
         }
