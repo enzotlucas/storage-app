@@ -1,35 +1,37 @@
-﻿@model IEnumerable<Storage.App.MVC.Core.Enterprise.EnterpriseEntity>
+﻿@model Storage.App.MVC.Models.EnterprisesPageViewModel;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Empresas";
 }
 
-<h1>Index</h1>
+<h1>Empresas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Cadastrar nova empresa</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nome
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Enterprises) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
         </tr>
 }
     </tbody>
 </table>
+
+<partial name="ActivityHistory.cshtml" />

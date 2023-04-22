@@ -1,29 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Storage.App.MVC.Core.ActivityHistory;
+using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Customer;
 using Storage.App.MVC.Infrastructure.Database;
+using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Controllers
 {
     public sealed class CustomersController : Controller
     {
-        private readonly SqlServerContext _context;
+        private const ActivityType ACTIVITY_TYPE = ActivityType.Customer;
 
-        public CustomersController(SqlServerContext context)
+        private readonly SqlServerContext _context;
+        private readonly IGetActivity _getActivity;
+
+        public CustomersController(SqlServerContext context, IGetActivity getActivity)
         {
             _context = context;
+            _getActivity = getActivity;
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var sqlServerContext = _context.Customers.Include(c => c.Enterprise);
-            return View(await sqlServerContext.ToListAsync());
+            var customers = await _context.Customers.Include(s => s.Enterprise).ToListAsync(cancellationToken);
+
+            var activity = await _getActivity.RunAsync(Guid.Empty, ACTIVITY_TYPE, cancellationToken);
+
+            return View(new CustomersPageViewModel { ActivityHistory = activity.ToList(), Customers = customers });
         }
 
         // GET: Customers/Details/5

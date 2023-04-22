@@ -1,28 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Storage.App.MVC.Core.ActivityHistory;
+using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Enterprise;
 using Storage.App.MVC.Infrastructure.Database;
+using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Controllers
 {
     public sealed class EnterprisesController : Controller
     {
-        private readonly SqlServerContext _context;
+        private const ActivityType ACTIVITY_TYPE = ActivityType.Enterprise;
 
-        public EnterprisesController(SqlServerContext context)
+        private readonly SqlServerContext _context;
+        private readonly IGetActivity _getActivity;
+
+        public EnterprisesController(SqlServerContext context, IGetActivity getActivity)
         {
             _context = context;
+            _getActivity = getActivity;
         }
 
         // GET: Enterprises
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-              return View(await _context.Enterprises.ToListAsync());
+            var enterprises = await _context.Enterprises.ToListAsync(cancellationToken);
+
+            var activity = await _getActivity.RunAsync(Guid.Empty, ACTIVITY_TYPE, cancellationToken);
+
+            return View(new EnterprisesPageViewModel { ActivityHistory = activity.ToList(), Enterprises = enterprises });
         }
 
         // GET: Enterprises/Details/5

@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = G:\dev-workspace\storage-app\src\Storage.App.MVC
 build_property._RazorSourceGeneratorDebug = 
 
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEFjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -33,6 +37,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcQWN0aXZpdHlIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/Create.cshtml]
@@ -57,6 +65,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Products/ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcQWN0aXZpdHlIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Products/Create.cshtml]

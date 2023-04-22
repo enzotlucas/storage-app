@@ -29,7 +29,7 @@ namespace Storage.App.MVC.Controllers
         // GET: Sales
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var sales = await _context.Sales.Include(s => s.Customer).Include(s => s.Enterprise).ToListAsync();
+            var sales = await _context.Sales.Include(s => s.Customer).Include(s => s.Enterprise).ToListAsync(cancellationToken);
 
             var activity = await _getActivity.RunAsync(Guid.Empty, ACTIVITY_TYPE, cancellationToken);
 

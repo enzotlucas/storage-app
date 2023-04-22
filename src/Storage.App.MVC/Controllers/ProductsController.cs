@@ -1,29 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Storage.App.MVC.Core.ActivityHistory;
+using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Product;
 using Storage.App.MVC.Infrastructure.Database;
+using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Controllers
 {
     public sealed class ProductsController : Controller
     {
-        private readonly SqlServerContext _context;
+        private const ActivityType ACTIVITY_TYPE = ActivityType.Product;
 
-        public ProductsController(SqlServerContext context)
+        private readonly SqlServerContext _context;
+        private readonly IGetActivity _getActivity;
+
+        public ProductsController(SqlServerContext context, IGetActivity getActivity)
         {
             _context = context;
+            _getActivity = getActivity;
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var sqlServerContext = _context.Products.Include(p => p.Enterprise);
-            return View(await sqlServerContext.ToListAsync());
+            var products = await _context.Products.Include(s => s.Enterprise).ToListAsync(cancellationToken);
+
+            var activity = await _getActivity.RunAsync(Guid.Empty, ACTIVITY_TYPE, cancellationToken);
+
+            return View(new ProductsPageViewModel { ActivityHistory = activity.ToList(), Products = products });
         }
 
         // GET: Products/Details/5
