@@ -18,6 +18,8 @@ namespace Storage.App.MVC.DependencyInjection
             services.AddAutoMapper(typeof(ActivityHistoryProfile));
 
             services.AddScoped<IGetActivity, GetActivity>();
+            services.AddScoped<IGetActivityById, GetActivityById>();
+            services.AddScoped<ISaveActivity, SaveActivity>();
 
             return services;
         }
