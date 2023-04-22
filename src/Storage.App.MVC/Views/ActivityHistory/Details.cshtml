@@ -1,0 +1,32 @@
+﻿@model Storage.App.MVC.Models.ActivityHistoryViewModel
+
+@{
+    ViewData["Title"] = "Histórico de atividade - Serviço de estoque e vendas";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Histórico de atividade</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tipo de atividade
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActivityType)
+        </dd>
+        <dt class="col-sm-2">
+            Descrição
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Data de atividade
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+    </dl>
+</div>

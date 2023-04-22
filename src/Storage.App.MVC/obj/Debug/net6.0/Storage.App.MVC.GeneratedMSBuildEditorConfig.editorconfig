@@ -15,8 +15,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = G:\dev-workspace\storage-app\src\Storage.App.MVC
 build_property._RazorSourceGeneratorDebug = 
 
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/ActivityHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEFjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/ActivityHistory/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdHlIaXN0b3J5XERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/Create.cshtml]
@@ -39,8 +39,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/ActivityHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcQWN0aXZpdHlIaXN0b3J5LmNzaHRtbA==
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/_ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJzXF9BY3Rpdml0eUhpc3RvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/Create.cshtml]
@@ -63,12 +63,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/_ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcX0FjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Products/ActivityHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcQWN0aXZpdHlIaXN0b3J5LmNzaHRtbA==
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Products/Create.cshtml]
@@ -91,8 +91,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Sales/ActivityHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcQWN0aXZpdHlIaXN0b3J5LmNzaHRtbA==
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Products/_ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdHNcX0FjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Sales/Create.cshtml]
@@ -113,6 +113,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Sales/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Sales/_ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNcX0FjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Shared/Error.cshtml]
