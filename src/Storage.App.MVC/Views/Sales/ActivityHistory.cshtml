@@ -1,0 +1,33 @@
+﻿@model Storage.App.MVC.Models.SalesPageViewModel;
+
+<h3>Histórico de atividades</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Data atividade
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ActivityHistory)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a asp-controller="ActivityHistory" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

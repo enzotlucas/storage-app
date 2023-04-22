@@ -283,3 +283,4 @@ G:\dev-workspace\storage-app\src\Storage.App.MVC\obj\Debug\net6.0\Storage.App.MV
 G:\dev-workspace\storage-app\src\Storage.App.MVC\obj\Debug\net6.0\Storage.App.MVC.RazorAssemblyInfo.cs
 G:\dev-workspace\storage-app\src\Storage.App.MVC\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 G:\dev-workspace\storage-app\src\Storage.App.MVC\obj\Debug\net6.0\scopedcss\projectbundle\Storage.App.MVC.bundle.scp.css
+G:\dev-workspace\storage-app\src\Storage.App.MVC\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

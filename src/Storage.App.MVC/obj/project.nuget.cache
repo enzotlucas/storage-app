@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "7mNCv37bZQ1WSDx1FZw1t+gadykAMCu7jWstW4EYcwhHlxG7Is5UKVBu/J8sCOqPnsAXrUBcf1rKzFuMMoL5Rg==",
+  "dgSpecHash": "PNtLS1Lw+uQWMg4CCTIfELYP7ia3DUqc2BjNHrpleJ6oC2svYl270H7TXR9FJ6E1+6OcEtj1foDHgEW7I5cYhA==",
   "success": true,
   "projectFilePath": "G:\\dev-workspace\\storage-app\\src\\Storage.App.MVC\\Storage.App.MVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usefr\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Usefr\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Usefr\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Usefr\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\Usefr\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

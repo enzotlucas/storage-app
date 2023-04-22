@@ -5,25 +5,35 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Storage.App.MVC.Core.ActivityHistory;
+using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Sale;
 using Storage.App.MVC.Infrastructure.Database;
+using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Controllers
 {
     public sealed class SalesController : Controller
     {
-        private readonly SqlServerContext _context;
+        private const ActivityType ACTIVITY_TYPE = ActivityType.Sale;
 
-        public SalesController(SqlServerContext context)
+        private readonly SqlServerContext _context;
+        private readonly IGetActivity _getActivity;
+
+        public SalesController(SqlServerContext context, IGetActivity getActivity)
         {
             _context = context;
+            _getActivity = getActivity;
         }
 
         // GET: Sales
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var sqlServerContext = _context.Sales.Include(s => s.Customer).Include(s => s.Enterprise);
-            return View(await sqlServerContext.ToListAsync());
+            var sales = await _context.Sales.Include(s => s.Customer).Include(s => s.Enterprise).ToListAsync();
+
+            var activity = await _getActivity.RunAsync(Guid.Empty, ACTIVITY_TYPE, cancellationToken);
+
+            return View(new SalesPageViewModel { ActivityHistory = activity.ToList(), Sales = sales});
         }
 
         // GET: Sales/Details/5
@@ -162,14 +172,14 @@ namespace Storage.App.MVC.Controllers
             {
                 _context.Sales.Remove(saleEntity);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SaleEntityExists(Guid id)
         {
-          return _context.Sales.Any(e => e.Id == id);
+            return _context.Sales.Any(e => e.Id == id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Storage.App.MVC.Core.Sale.SaleEntity>
+﻿@model Storage.App.MVC.Models.SalesPageViewModel;
 
 @{
     ViewData["Title"] = "Vendas";
@@ -13,22 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Note)
+                Anotação
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
+                Preço total
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enterprise)
+                Cliente
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Sales) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Note)
@@ -40,14 +37,13 @@
                 @Html.DisplayFor(modelItem => item.Customer.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Enterprise.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<partial name="ActivityHistory.cshtml" />
