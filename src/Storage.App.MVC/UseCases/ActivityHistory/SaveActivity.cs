@@ -16,6 +16,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
         }
 
         public async Task RunAsync(Guid enterpriseId,
+                                   Guid objectId,
                                    ActivityType activityType,
                                    string description,
                                    CancellationToken cancellationToken)
@@ -25,11 +26,13 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
             var activityHistory = new ActivityHistoryEntity
             {
                 EnterpriseId = enterpriseId,
+                ObjectId = objectId,
                 ActivityType = activityType,
                 Description = description,
+                CreatedAt = DateTime.Now,
             };
 
-            await _uow.ActivityHistoryRepository.CreateAsync(activityHistory, cancellationToken);
+            await _uow.ActivityHistory.CreateAsync(activityHistory, cancellationToken);
 
             _logger.LogDebug("End - [SaveActivity.RunAsync]");
         }

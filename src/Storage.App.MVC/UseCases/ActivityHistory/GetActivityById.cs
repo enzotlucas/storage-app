@@ -22,7 +22,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
         {
             _logger.LogDebug("Begin - [GetActivityById.RunAsync]");
 
-            var activityHistory = await _uow.ActivityHistoryRepository.GetByIdAsync(id, cancellationToken);
+            var activityHistory = await _uow.ActivityHistory.GetByIdAsync(id, cancellationToken);
 
             if (activityHistory.Id == Guid.Empty)
             {

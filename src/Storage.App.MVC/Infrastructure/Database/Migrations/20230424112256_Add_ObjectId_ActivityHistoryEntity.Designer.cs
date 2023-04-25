@@ -9,11 +9,11 @@ using Storage.App.MVC.Infrastructure.Database;
 
 #nullable disable
 
-namespace Storage.App.MVC.Infrastructure.Data.Migrations
+namespace Storage.App.MVC.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(SqlServerContext))]
-    [Migration("20230422024157_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20230424112256_Add_ObjectId_ActivityHistoryEntity")]
+    partial class Add_ObjectId_ActivityHistoryEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("EnterpriseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ObjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -93,10 +96,52 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -154,9 +199,6 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("ProductEntityId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -165,8 +207,6 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("EnterpriseId");
-
-                    b.HasIndex("ProductEntityId");
 
                     b.ToTable("Sales");
                 });
@@ -180,6 +220,9 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("EnterpriseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
@@ -191,11 +234,13 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EnterpriseId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleItemEntity");
+                    b.ToTable("SaleItems");
                 });
 
             modelBuilder.Entity("Storage.App.MVC.Core.ActivityHistory.ActivityHistoryEntity", b =>
@@ -240,10 +285,6 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         .HasForeignKey("EnterpriseId")
                         .IsRequired();
 
-                    b.HasOne("Storage.App.MVC.Core.Product.ProductEntity", null)
-                        .WithMany("Sales")
-                        .HasForeignKey("ProductEntityId");
-
                     b.Navigation("Customer");
 
                     b.Navigation("Enterprise");
@@ -251,8 +292,13 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Storage.App.MVC.Core.Sale.SaleItemEntity", b =>
                 {
+                    b.HasOne("Storage.App.MVC.Core.Enterprise.EnterpriseEntity", "Enterprise")
+                        .WithMany("SaleItems")
+                        .HasForeignKey("EnterpriseId")
+                        .IsRequired();
+
                     b.HasOne("Storage.App.MVC.Core.Product.ProductEntity", "Product")
-                        .WithMany()
+                        .WithMany("SaleItems")
                         .HasForeignKey("ProductId")
                         .IsRequired();
 
@@ -260,6 +306,8 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         .WithMany("SaleItems")
                         .HasForeignKey("SaleId")
                         .IsRequired();
+
+                    b.Navigation("Enterprise");
 
                     b.Navigation("Product");
 
@@ -279,12 +327,14 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
 
                     b.Navigation("Products");
 
+                    b.Navigation("SaleItems");
+
                     b.Navigation("Sales");
                 });
 
             modelBuilder.Entity("Storage.App.MVC.Core.Product.ProductEntity", b =>
                 {
-                    b.Navigation("Sales");
+                    b.Navigation("SaleItems");
                 });
 
             modelBuilder.Entity("Storage.App.MVC.Core.Sale.SaleEntity", b =>

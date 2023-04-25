@@ -20,3 +20,8 @@ body {
 .page-content {
     margin-bottom: 48px;
 }
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}

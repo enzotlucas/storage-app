@@ -15,7 +15,9 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
         public async Task<IEnumerable<ActivityHistoryEntity>> GetByAcitivityTypeAsync(Guid enterpriseId, ActivityType activityType, CancellationToken cancellationToken)
         {
             var activityHistory = await _context.ActivityHistory
-                                                      .Where(a => a.EnterpriseId == enterpriseId && a.ActivityType == activityType)
+                                                      .Where(a => activityType == ActivityType.Enterprise ? 
+                                                                (a.ActivityType == activityType) : 
+                                                                (a.EnterpriseId == enterpriseId && a.ActivityType == activityType))
                                                       .Include(s => s.Enterprise)
                                                       .ToListAsync(cancellationToken);
 
@@ -27,7 +29,7 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             var activityHistory = await _context.ActivityHistory.Include(s => s.Enterprise)
                                                      .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-            return activityHistory ?? new ActivityHistoryEntity();        
+            return activityHistory ?? new ActivityHistoryEntity { Id = Guid.Empty };        
         }
 
         public async Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory, CancellationToken cancellationToken)

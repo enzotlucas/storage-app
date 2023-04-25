@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Product;
+using Storage.App.MVC.Domain.Authorization;
 using Storage.App.MVC.Infrastructure.Database;
 using Storage.App.MVC.Models;
 
@@ -27,7 +28,7 @@ namespace Storage.App.MVC.Controllers
             _getActivity = getActivity;
         }
 
-        // GET: Products
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var products = await _context.Products.Include(s => s.Enterprise).ToListAsync(cancellationToken);
@@ -37,7 +38,7 @@ namespace Storage.App.MVC.Controllers
             return View(new ProductsPageViewModel { ActivityHistory = activity.ToList(), Products = products });
         }
 
-        // GET: Products/Details/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Products == null)
@@ -56,17 +57,15 @@ namespace Storage.App.MVC.Controllers
             return View(productEntity);
         }
 
-        // GET: Products/Create
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public IActionResult Create()
         {
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name");
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name");
             return View();
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Count,Price,Cost,Brand,EnterpriseId")] ProductEntity productEntity)
         {
@@ -77,11 +76,11 @@ namespace Storage.App.MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
             return View(productEntity);
         }
 
-        // GET: Products/Edit/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Products == null)
@@ -94,14 +93,12 @@ namespace Storage.App.MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
             return View(productEntity);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Count,Price,Cost,Brand,EnterpriseId")] ProductEntity productEntity)
         {
@@ -130,11 +127,11 @@ namespace Storage.App.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", productEntity.EnterpriseId);
             return View(productEntity);
         }
 
-        // GET: Products/Delete/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Products == null)
@@ -153,8 +150,8 @@ namespace Storage.App.MVC.Controllers
             return View(productEntity);
         }
 
-        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {

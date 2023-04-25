@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Customer;
+using Storage.App.MVC.Domain.Authorization;
 using Storage.App.MVC.Infrastructure.Database;
+using Storage.App.MVC.Infrastructure.Identity;
 using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Controllers
@@ -14,15 +16,17 @@ namespace Storage.App.MVC.Controllers
         private const ActivityType ACTIVITY_TYPE = ActivityType.Customer;
 
         private readonly SqlServerContext _context;
+        private readonly IdentityContext _identityContext;
         private readonly IGetActivity _getActivity;
 
-        public CustomersController(SqlServerContext context, IGetActivity getActivity)
+        public CustomersController(SqlServerContext context, IdentityContext identityContext, IGetActivity getActivity)
         {
             _context = context;
+            _identityContext = identityContext;
             _getActivity = getActivity;
         }
 
-        // GET: Customers
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var customers = await _context.Customers.Include(s => s.Enterprise).ToListAsync(cancellationToken);
@@ -32,7 +36,7 @@ namespace Storage.App.MVC.Controllers
             return View(new CustomersPageViewModel { ActivityHistory = activity.ToList(), Customers = customers });
         }
 
-        // GET: Customers/Details/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Customers == null)
@@ -51,17 +55,15 @@ namespace Storage.App.MVC.Controllers
             return View(customerEntity);
         }
 
-        // GET: Customers/Create
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public IActionResult Create()
         {
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name");
+            //ViewData["EnterpriseId"] = new SelectList(_identityContext., "Id", "Name");
             return View();
         }
 
-        // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,PhoneNumber,EnterpriseId")] CustomerEntity customerEntity)
         {
@@ -72,11 +74,11 @@ namespace Storage.App.MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
             return View(customerEntity);
         }
 
-        // GET: Customers/Edit/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Customers == null)
@@ -89,15 +91,13 @@ namespace Storage.App.MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
             return View(customerEntity);
         }
 
-        // POST: Customers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,FirstName,LastName,Email,PhoneNumber,EnterpriseId")] CustomerEntity customerEntity)
         {
             if (id != customerEntity.Id)
@@ -125,11 +125,11 @@ namespace Storage.App.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
+            //ViewData["EnterpriseId"] = new SelectList(_context.Enterprises, "Id", "Name", customerEntity.EnterpriseId);
             return View(customerEntity);
         }
 
-        // GET: Customers/Delete/5
+        [ClaimsAuthorize("UserType", "Enterprise")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Customers == null)
@@ -148,8 +148,8 @@ namespace Storage.App.MVC.Controllers
             return View(customerEntity);
         }
 
-        // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ClaimsAuthorize("UserType", "Enterprise")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
@@ -162,14 +162,14 @@ namespace Storage.App.MVC.Controllers
             {
                 _context.Customers.Remove(customerEntity);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerEntityExists(Guid id)
         {
-          return _context.Customers.Any(e => e.Id == id);
+            return _context.Customers.Any(e => e.Id == id);
         }
     }
 }

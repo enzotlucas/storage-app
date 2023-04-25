@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Storage.App.MVC.Infrastructure.Data.Migrations
+namespace Storage.App.MVC.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
     public partial class InitialDatabase : Migration
@@ -16,7 +16,21 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,8 +108,7 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EnterpriseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductEntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    EnterpriseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,33 +123,34 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                         column: x => x.EnterpriseId,
                         principalTable: "Enterprises",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Sales_Products_ProductEntityId",
-                        column: x => x.ProductEntityId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "SaleItemEntity",
+                name: "SaleItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SaleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SaleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EnterpriseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SaleItemEntity", x => x.Id);
+                    table.PrimaryKey("PK_SaleItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SaleItemEntity_Products_ProductId",
+                        name: "FK_SaleItems_Enterprises_EnterpriseId",
+                        column: x => x.EnterpriseId,
+                        principalTable: "Enterprises",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SaleItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SaleItemEntity_Sales_SaleId",
+                        name: "FK_SaleItems_Sales_SaleId",
                         column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "Id");
@@ -158,13 +172,18 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                 column: "EnterpriseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleItemEntity_ProductId",
-                table: "SaleItemEntity",
+                name: "IX_SaleItems_EnterpriseId",
+                table: "SaleItems",
+                column: "EnterpriseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SaleItems_ProductId",
+                table: "SaleItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleItemEntity_SaleId",
-                table: "SaleItemEntity",
+                name: "IX_SaleItems_SaleId",
+                table: "SaleItems",
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
@@ -176,11 +195,6 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                 name: "IX_Sales_EnterpriseId",
                 table: "Sales",
                 column: "EnterpriseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sales_ProductEntityId",
-                table: "Sales",
-                column: "ProductEntityId");
         }
 
         /// <inheritdoc />
@@ -190,16 +204,16 @@ namespace Storage.App.MVC.Infrastructure.Data.Migrations
                 name: "ActivityHistory");
 
             migrationBuilder.DropTable(
-                name: "SaleItemEntity");
+                name: "SaleItems");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Sales");
 
             migrationBuilder.DropTable(
                 name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Enterprises");

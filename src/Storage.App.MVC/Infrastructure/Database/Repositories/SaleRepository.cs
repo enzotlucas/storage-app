@@ -30,7 +30,7 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
                                             .Include(s => s.SaleItems)
                                             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-            return sale ?? new SaleEntity();
+            return sale ?? new SaleEntity { Id = Guid.Empty };
         }
 
         public async Task<SaleEntity> CreateAsync(SaleEntity sale, CancellationToken cancellationToken)

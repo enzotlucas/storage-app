@@ -25,7 +25,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
         {
             _logger.LogDebug("Begin - [GetActivity.RunAsync]");
 
-            var activityHistory = await _uow.ActivityHistoryRepository.GetByAcitivityTypeAsync(enterpriseId, activityType, cancellationToken);
+            var activityHistory = await _uow.ActivityHistory.GetByAcitivityTypeAsync(enterpriseId, activityType, cancellationToken);
 
             if (!activityHistory.Any())
             {

@@ -3,9 +3,9 @@ using Storage.App.MVC.Models;
 
 namespace Storage.App.MVC.Core.ActivityHistory
 {
-    public sealed class ActivityHistoryProfile : Profile
+    public sealed class ActivityHistoryMapperProfile : Profile
     {
-        public ActivityHistoryProfile()
+        public ActivityHistoryMapperProfile()
         {
             CreateMap<ActivityHistoryEntity, ActivityHistoryViewModel>().ReverseMap();
         }

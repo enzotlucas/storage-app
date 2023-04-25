@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Storage.App.MVC.Core.Enterprise;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
-    public sealed class EnterpriseMapping : IEntityTypeConfiguration<EnterpriseEntity>
+    public sealed class EnterpriseMapping
+        : IEntityTypeConfiguration<EnterpriseEntity>
     {
         public void Configure(EntityTypeBuilder<EnterpriseEntity> builder)
         {
@@ -14,24 +15,24 @@ namespace Storage.App.MVC.Infrastructure.Database.Mappings
                  .IsRequired()
                  .HasMaxLength(200);
 
-            builder.HasMany(e => e.Products)
-                   .WithOne(p => p.Enterprise)
-                   .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(e => e.Products)
+            //       .WithOne(p => p.Enterprise)
+            //       .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.Customers)
-                   .WithOne(c => c.Enterprise)
-                   .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(e => e.Customers)
+            //       .WithOne(c => c.Enterprise)
+            //       .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.Sales)
-                  .WithOne(c => c.Enterprise)
-                  .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(e => e.Sales)
+            //      .WithOne(c => c.Enterprise)
+            //      .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.SaleItems)
-                   .WithOne(c => c.Enterprise)
-                   .OnDelete(DeleteBehavior.Cascade);
+            //builder.HasMany(e => e.SaleItems)
+            //       .WithOne(c => c.Enterprise)
+            //       .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(e => e.ActivityHistory)
-                   .WithOne(c => c.Enterprise);
+            //builder.HasMany(e => e.ActivityHistory)
+            //       .WithOne(c => c.Enterprise);
         }
     }
 }

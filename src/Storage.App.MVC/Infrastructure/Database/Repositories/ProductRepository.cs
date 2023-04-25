@@ -26,7 +26,7 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             var product = await _context.Products.Include(s => s.Enterprise)
                                                  .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-            return product ?? new ProductEntity();
+            return product ?? new ProductEntity { Id = Guid.Empty };
         }
 
         public async Task<ProductEntity> CreateAsync(ProductEntity product, CancellationToken cancellationToken)

@@ -26,7 +26,7 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             var customer = await _context.Customers.Include(s => s.Enterprise)
                                                    .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-            return customer ?? new CustomerEntity();
+            return customer ?? new CustomerEntity { Id = Guid.Empty };
         }
 
         public async Task<CustomerEntity> CreateAsync(CustomerEntity customer, CancellationToken cancellationToken)

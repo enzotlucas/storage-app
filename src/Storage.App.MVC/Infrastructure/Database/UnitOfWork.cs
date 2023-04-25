@@ -3,28 +3,32 @@ using Storage.App.MVC.Core.Customer;
 using Storage.App.MVC.Core.Domain;
 using Storage.App.MVC.Core.Product;
 using Storage.App.MVC.Core.Sale;
+using Storage.App.MVC.Domain.Enterprise;
 
 namespace Storage.App.MVC.Infrastructure.Database
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly SqlServerContext _context;
-        public ISaleRepository SaleRepository { get; set; }
-        public ICustomerRepository CustomerRepository { get; set; }
-        public IProductRepository ProductRepository { get; set; }
-        public IActivityHistoryRepository ActivityHistoryRepository { get; set; }
+        public IEnterpriseRepository Enterprises { get; set; }
+        public ISaleRepository Sales { get; set; }
+        public ICustomerRepository Customers { get; set; }
+        public IProductRepository Products { get; set; }
+        public IActivityHistoryRepository ActivityHistory { get; set; }
 
-        public UnitOfWork(SqlServerContext context, 
-                          ISaleRepository saleRepository, 
-                          ICustomerRepository customerRepository, 
-                          IProductRepository productRepository, 
+        public UnitOfWork(SqlServerContext context,
+                          IEnterpriseRepository enterprises,
+                          ISaleRepository saleRepository,
+                          ICustomerRepository customerRepository,
+                          IProductRepository productRepository,
                           IActivityHistoryRepository activityHistoryRepository)
         {
             _context = context;
-            SaleRepository = saleRepository;
-            CustomerRepository = customerRepository;
-            ProductRepository = productRepository;
-            ActivityHistoryRepository = activityHistoryRepository;
+            Enterprises = enterprises;
+            Sales = saleRepository;
+            Customers = customerRepository;
+            Products = productRepository;
+            ActivityHistory = activityHistoryRepository;
         }
 
         public async Task<bool> SaveChangesAsync()
@@ -43,10 +47,10 @@ namespace Storage.App.MVC.Infrastructure.Database
             if (disposing)
             {
                 _context.Dispose();
-                SaleRepository.Dispose();
-                CustomerRepository.Dispose();
-                ProductRepository.Dispose();
-                ActivityHistoryRepository.Dispose();
+                Sales.Dispose();
+                Customers.Dispose();
+                Products.Dispose();
+                ActivityHistory.Dispose();
             }
     }
         }

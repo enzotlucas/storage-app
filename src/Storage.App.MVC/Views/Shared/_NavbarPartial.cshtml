@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Storage.App.MVC.Core.Enterprise
+
+@inject SignInManager<EnterpriseEntity> SignInManager
+
+<ul class="navbar-nav flex-grow-1">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Produtos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Clientes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Index">Vendas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Enterprises" asp-action="Index">Empresas</a>
+        </li>
+    }
+</ul>
