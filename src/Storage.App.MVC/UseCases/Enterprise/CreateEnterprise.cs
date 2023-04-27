@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Storage.App.MVC.Core.Enterprise;
-using Storage.App.MVC.Models;
 using Storage.App.MVC.Core.Domain;
 using AutoMapper;
 using Storage.App.MVC.Domain.Core;
@@ -11,6 +10,8 @@ using Storage.App.MVC.Core.ActivityHistory;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Storage.App.MVC.Domain.Enterprise;
+using Storage.App.MVC.Domain.ActivityHistory;
+using Storage.App.MVC.Models.Enterprise;
 
 namespace Storage.App.MVC.UseCases.Enterprise
 {
@@ -43,6 +44,8 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
         public async Task<BaseResult> RunAsync(EnterpriseViewModel enterpriseViewModel, Guid enterpriseId, CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Begin - [CreateEnterprise.RunAsync]");
+
             var enterprise = _mapper.Map<EnterpriseEntity>(enterpriseViewModel);
 
             var userManagerResult = await _userManager.CreateAsync(enterprise, enterpriseViewModel.Password);
@@ -51,12 +54,12 @@ namespace Storage.App.MVC.UseCases.Enterprise
             {
                 var errors = userManagerResult.Errors.Select(error => error.Description);
 
-                _logger.LogWarning("Error creating account", new { errors });
+                _logger.LogWarning("End - [CreateEnterprise.RunAsync] - Error creating account", new { errors });
 
                 return _response.AsError(errors.ToList());
             }
 
-            var userClaims = enterprise.GenerateClaims();
+            var userClaims = enterprise.GenerateClaims("Enterprise");
 
             await _userManager.AddClaimsAsync(enterprise, userClaims);
 
@@ -66,18 +69,18 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
                 await _userManager.DeleteAsync(enterprise);
 
-                _logger.LogWarning("Error creating account", new { errors });
+                _logger.LogWarning("End - [CreateEnterprise.RunAsync] - Error creating account", new { errors });
 
                 return _response.AsError(errors.ToList());
             }
 
             await _uow.Enterprises.CreateAsync(enterprise, cancellationToken);
 
-            await _saveActivity.RunAsync(enterpriseId, enterprise.Id, ActivityType.Enterprise, $"Enterprise {enterprise.Name} created", cancellationToken);
+            await _saveActivity.RunAsync(enterpriseId, enterprise.Id, ActivityType.Enterprise, ActivityAction.Create, $"Enterprise {enterprise.Name} created", cancellationToken);
 
             if (!await _uow.SaveChangesAsync())
             {
-                _logger.LogError("Error saving on database");
+                _logger.LogError("End - [CreateEnterprise.RunAsync] - Error saving on database");
 
                 await _userManager.RemoveClaimsAsync(enterprise, userClaims);
 
@@ -87,6 +90,8 @@ namespace Storage.App.MVC.UseCases.Enterprise
             }
 
             _logger.LogInformation("User created");
+
+            _logger.LogDebug("End - [CreateEnterprise.RunAsync]");
 
             return _response.AsSuccess();
         }

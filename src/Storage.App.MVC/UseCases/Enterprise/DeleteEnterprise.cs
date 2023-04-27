@@ -3,6 +3,7 @@ using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Domain;
 using Storage.App.MVC.Core.Enterprise;
+using Storage.App.MVC.Domain.ActivityHistory;
 using Storage.App.MVC.Domain.Core;
 using Storage.App.MVC.Domain.Enterprise.UseCases;
 
@@ -33,22 +34,24 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
         public async Task<BaseResult> RunAsync(Guid id, Guid enterpriseId, CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Begin - [DeleteEnterprise.RunAsync]");
+
             var enterprise = await _uow.Enterprises.GetByIdAsync(id, cancellationToken);
 
             if(!enterprise.Exists())
             {
-                _logger.LogWarning("User don't exists", new { id });
+                _logger.LogWarning("End - [DeleteEnterprise.RunAsync] - User don't exists", new { id });
 
                 return _response.AsError("User don't exists");
             }
 
-            await _saveActivity.RunAsync(enterpriseId, id, ActivityType.Enterprise, $"User {enterprise.Name} excluded", cancellationToken);
+            await _saveActivity.RunAsync(enterpriseId, id, ActivityType.Enterprise, ActivityAction.Delete, $"User {enterprise.Name} excluded", cancellationToken);
 
             await _uow.Enterprises.DeleteAsync(enterprise, cancellationToken);
 
             if (!await _uow.SaveChangesAsync())
             {
-                _logger.LogError("Error saving on database", new { id });
+                _logger.LogError("End - [DeleteEnterprise.RunAsync] - Error saving on database", new { id });
 
                 return _response.AsError("Error saving on database");
             }
@@ -63,7 +66,7 @@ namespace Storage.App.MVC.UseCases.Enterprise
             {
                 var errors = deletedClaimsResult.Errors.Select(error => error.Description);
 
-                _logger.LogError("Error deleting claims on identity manager", new { id, errors });
+                _logger.LogError("End - [DeleteEnterprise.RunAsync] - Error deleting claims on identity manager", new { id, errors });
 
                 return _response.AsError(errors.ToList());
             }
@@ -74,7 +77,7 @@ namespace Storage.App.MVC.UseCases.Enterprise
             {
                 var errors = deletedUserResult.Errors.Select(error => error.Description);
 
-                _logger.LogError("Error deleting account on identity manager", new { id, errors });
+                _logger.LogError("End - [DeleteEnterprise.RunAsync] - Error deleting account on identity manager", new { id, errors });
 
                 await _userManager.AddClaimsAsync(user, claims);
 
@@ -82,6 +85,8 @@ namespace Storage.App.MVC.UseCases.Enterprise
             }
 
             _logger.LogInformation("User deleted", new { id });
+
+            _logger.LogDebug("End - [DeleteEnterprise.RunAsync]");
 
             return _response.AsSuccess();
         }

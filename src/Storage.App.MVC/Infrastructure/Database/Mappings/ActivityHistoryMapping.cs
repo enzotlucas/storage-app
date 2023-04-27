@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Storage.App.MVC.Core.Product;
 using Storage.App.MVC.Core.ActivityHistory;
+using Storage.App.MVC.Domain.ActivityHistory;
 
 namespace Storage.App.MVC.Infrastructure.Database.Mappings
 {
@@ -23,6 +23,12 @@ namespace Storage.App.MVC.Infrastructure.Database.Mappings
                    .HasMaxLength(50)
                    .HasConversion(activityType => Enum.GetName(activityType),
                                   activityTypeName => (ActivityType)Enum.Parse(typeof(ActivityType), activityTypeName));
+
+            builder.Property(a => a.ActivityAction)
+                   .IsRequired()
+                   .HasMaxLength(50)
+                   .HasConversion(activityAction => Enum.GetName(activityAction),
+                                  activityActionName => (ActivityAction)Enum.Parse(typeof(ActivityAction), activityActionName));
 
             builder.HasOne(a => a.Enterprise)
                    .WithMany(e => e.ActivityHistory)

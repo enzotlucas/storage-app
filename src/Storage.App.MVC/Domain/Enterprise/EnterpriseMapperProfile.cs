@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.Enterprise;
-using Storage.App.MVC.Models;
+using Storage.App.MVC.Models.Enterprise;
 
 namespace Storage.App.MVC.Domain.Enterprise
 {

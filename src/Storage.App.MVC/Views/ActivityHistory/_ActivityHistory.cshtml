@@ -1,4 +1,4 @@
-﻿@model Storage.App.MVC.Models.EnterprisesPageViewModel;
+﻿@model List<ActivityHistoryViewModel>;
 
 <h3>Histórico de atividades</h3>
 
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ActivityHistory)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -25,7 +25,7 @@
                     @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>
-                    <a asp-controller="ActivityHistory" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-controller="ActivityHistory" asp-action="Details" class="btn btn-secondary btn-table" asp-route-id="@item.Id">Detalhes <i class="fa fa-book"></i></a>
                 </td>
             </tr>
         }

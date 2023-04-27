@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Storage.App.MVC.Domain.Enterprise.UseCases;
 using Storage.App.MVC.Models;
-using System.Diagnostics;
+using Storage.App.MVC.Models.Enterprise;
 
 namespace Storage.App.MVC.Controllers
 {

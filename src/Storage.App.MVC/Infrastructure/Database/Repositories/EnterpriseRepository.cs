@@ -15,7 +15,7 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task<IEnumerable<EnterpriseEntity>> GetAllAsync(Guid enterpriseId, CancellationToken cancellationToken)
         {
-            var enterprises = await _context.Enterprises.ToListAsync(cancellationToken);
+            var enterprises = await _context.Enterprises.Where(e => e.Name != "Admin").ToListAsync(cancellationToken);
 
             return enterprises.Count > 0 ? enterprises : Enumerable.Empty<EnterpriseEntity>();
         }
@@ -29,6 +29,9 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task<EnterpriseEntity> CreateAsync(EnterpriseEntity enterprise, CancellationToken cancellationToken)
         {
+            enterprise.CreatedAt = DateTime.Now;
+            enterprise.UpdatedAt = DateTime.Now;
+
             await _context.AddAsync(enterprise, cancellationToken);
 
             return enterprise;
@@ -36,6 +39,8 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task UpdateAsync(EnterpriseEntity enterprise, CancellationToken cancellationToken)
         {
+            enterprise.UpdatedAt = DateTime.Now;
+
             await Task.Run(() => _context.Update(enterprise), cancellationToken);
         }
 

@@ -1,5 +1,5 @@
 ﻿using Storage.App.MVC.Domain.Core;
-using Storage.App.MVC.Models;
+using Storage.App.MVC.Models.Enterprise;
 
 namespace Storage.App.MVC.Domain.Enterprise.UseCases
 {

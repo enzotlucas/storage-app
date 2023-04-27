@@ -1,9 +1,10 @@
 ﻿using Storage.App.MVC.Core.Enterprise;
 using Storage.App.MVC.Core.Sale;
+using Storage.App.MVC.Domain.Core;
 
 namespace Storage.App.MVC.Core.Product
 {
-    public class ProductEntity
+    public class ProductEntity : BaseEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

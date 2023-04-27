@@ -5,7 +5,7 @@ namespace Storage.App.MVC.Domain.Enterprise
 {
     public static class EnterpriseExtensions
     {
-        public static IEnumerable<Claim> GenerateClaims(this EnterpriseEntity enterprise)
+        public static IEnumerable<Claim> GenerateClaims(this EnterpriseEntity enterprise, string userType)
         {
             return new List<Claim>()
             {
@@ -14,7 +14,7 @@ namespace Storage.App.MVC.Domain.Enterprise
                 new Claim(ClaimTypes.Name, enterprise.Name),
                 new Claim(ClaimTypes.MobilePhone, enterprise.PhoneNumber),
                 new Claim(ClaimTypes.Email, enterprise.Email),
-                new Claim("UserType","Enterprise")
+                new Claim("UserType",userType)
             };
         }
     }

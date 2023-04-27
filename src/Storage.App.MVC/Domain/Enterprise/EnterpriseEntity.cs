@@ -20,6 +20,8 @@ namespace Storage.App.MVC.Core.Enterprise
             }
         }
         public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public ICollection<CustomerEntity> Customers { get; set; }
         public ICollection<ProductEntity> Products { get; set; }

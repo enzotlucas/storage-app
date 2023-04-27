@@ -1,0 +1,52 @@
+﻿@model List<ActivityHistoryViewModel>;
+
+<h3>Histórico de atividades</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Ação realizada
+            </th>
+            <th>
+                Data atividade
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @{
+                        switch (item.ActivityAction)
+                        {
+                            case Storage.App.MVC.Domain.ActivityHistory.ActivityAction.Create:
+                                @Html.Display("Criação")                                
+                                break;
+                            case Storage.App.MVC.Domain.ActivityHistory.ActivityAction.Delete:
+                                @Html.Display("Exclusão")
+                                break;
+                            default:
+                                @Html.Display("Atualização")
+                                break;
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a asp-controller="ActivityHistory" asp-action="Details" class="btn btn-secondary btn-table" asp-route-id="@item.Id">Detalhes <i class="fa fa-book"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

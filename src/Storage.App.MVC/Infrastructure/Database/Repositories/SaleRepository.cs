@@ -35,7 +35,8 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task<SaleEntity> CreateAsync(SaleEntity sale, CancellationToken cancellationToken)
         {
-            sale.Id = Guid.NewGuid();
+            sale.CreatedAt = DateTime.Now;
+            sale.UpdatedAt = DateTime.Now;
 
             await _context.AddAsync(sale, cancellationToken);
 
@@ -44,6 +45,8 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task UpdateAsync(SaleEntity sale, CancellationToken cancellationToken)
         {
+            sale.UpdatedAt = DateTime.Now;
+
             await Task.Run(() => _context.Update(sale), cancellationToken);
         }
 

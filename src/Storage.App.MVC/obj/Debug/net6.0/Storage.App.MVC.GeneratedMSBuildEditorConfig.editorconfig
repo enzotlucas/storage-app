@@ -67,8 +67,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Account/ManageAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxNYW5hZ2VBY2NvdW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Account/ResetPasswordConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/ActivityHistory/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdHlIaXN0b3J5XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/ActivityHistory/_ActivityHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdHlIaXN0b3J5XF9BY3Rpdml0eUhpc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/ActivityHistory/_ActivityHistoryDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdHlIaXN0b3J5XF9BY3Rpdml0eUhpc3RvcnlEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Customers/Create.cshtml]
@@ -113,10 +137,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Enterprises/_ActivityHistory.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50ZXJwcmlzZXNcX0FjdGl2aXR5SGlzdG9yeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/dev-workspace/storage-app/src/Storage.App.MVC/Views/Home/Index.cshtml]

@@ -28,7 +28,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
             {
                 _logger.LogDebug("End - [GetActivityById.RunAsync] - Any activity found");
 
-                return new ActivityHistoryViewModel();
+                return new ActivityHistoryViewModel { Id = Guid.Empty};
             }
 
             _logger.LogDebug("End - [GetActivityById.RunAsync] - Activity found", new { activityHistory });

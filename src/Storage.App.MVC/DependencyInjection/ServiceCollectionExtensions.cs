@@ -16,6 +16,7 @@ using Storage.App.MVC.Domain.Enterprise.UseCases;
 using Storage.App.MVC.UseCases.Enterprise;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Storage.App.MVC.Domain.Customer.UseCases;
 
 namespace Storage.App.MVC.DependencyInjection
 {
@@ -27,11 +28,14 @@ namespace Storage.App.MVC.DependencyInjection
 
             services.AddScoped<IGetActivity, GetActivity>();
             services.AddScoped<IGetActivityById, GetActivityById>();
+            services.AddScoped<IGetActivitiesByObjectId, GetActivitiesByObjectId>();
             services.AddScoped<ISaveActivity, SaveActivity>();
 
             services.AddScoped<ICreateEnterprise, CreateEnterprise>();
             services.AddScoped<ICreateAdminIfNeeded, CreateAdminIfNeeded>();
             services.AddScoped<IDeleteEnterprise, DeleteEnterprise>();
+            services.AddScoped<IGetEnterprises, GetEnterprises>();
+            services.AddScoped<IGetEnterpriseById, GetEnterpriseById>();
 
             return services;
         }

@@ -1,12 +1,13 @@
 ﻿using Storage.App.MVC.Core.Customer;
 using Storage.App.MVC.Core.Enterprise;
 using Storage.App.MVC.Core.Product;
+using Storage.App.MVC.Domain.Core;
 
 namespace Storage.App.MVC.Core.Sale
 {
-    public class SaleEntity
+    public class SaleEntity : BaseEntity
     {
-        public Guid Id { get; set; }        
+        public Guid Id { get; set; }
         public string Note { get; set; }       
         public decimal TotalPrice { get; set; }
 

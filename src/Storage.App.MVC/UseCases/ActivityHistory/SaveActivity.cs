@@ -1,6 +1,7 @@
 ﻿using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.ActivityHistory.UseCases;
 using Storage.App.MVC.Core.Domain;
+using Storage.App.MVC.Domain.ActivityHistory;
 
 namespace Storage.App.MVC.UseCases.ActivityHistory
 {
@@ -18,6 +19,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
         public async Task RunAsync(Guid enterpriseId,
                                    Guid objectId,
                                    ActivityType activityType,
+                                   ActivityAction activityAction,
                                    string description,
                                    CancellationToken cancellationToken)
         {
@@ -28,6 +30,7 @@ namespace Storage.App.MVC.UseCases.ActivityHistory
                 EnterpriseId = enterpriseId,
                 ObjectId = objectId,
                 ActivityType = activityType,
+                ActivityAction = activityAction,
                 Description = description,
                 CreatedAt = DateTime.Now,
             };

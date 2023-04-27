@@ -24,6 +24,16 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
             return activityHistory.Count > 0 ? activityHistory : Enumerable.Empty<ActivityHistoryEntity>();
         }
 
+        public async Task<IEnumerable<ActivityHistoryEntity>> GetByObjectIdAsync(Guid objectId, CancellationToken cancellationToken)
+        {
+            var activityHistory = await _context.ActivityHistory
+                                                      .Where(a => a.ObjectId == objectId)
+                                                      .Include(s => s.Enterprise)
+                                                      .ToListAsync(cancellationToken);
+
+            return activityHistory.Count > 0 ? activityHistory : Enumerable.Empty<ActivityHistoryEntity>();
+        }
+
         public async Task<ActivityHistoryEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var activityHistory = await _context.ActivityHistory.Include(s => s.Enterprise)
@@ -34,7 +44,8 @@ namespace Storage.App.MVC.Infrastructure.Database.Repositories
 
         public async Task<ActivityHistoryEntity> CreateAsync(ActivityHistoryEntity activityHistory, CancellationToken cancellationToken)
         {
-            activityHistory.Id = Guid.NewGuid();
+            activityHistory.CreatedAt = DateTime.Now;
+            activityHistory.UpdatedAt = DateTime.Now;
 
             await _context.AddAsync(activityHistory, cancellationToken);
 

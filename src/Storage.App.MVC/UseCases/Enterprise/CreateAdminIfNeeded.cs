@@ -6,10 +6,10 @@ using Storage.App.MVC.Core.ActivityHistory;
 using Storage.App.MVC.Core.Domain;
 using Storage.App.MVC.Core.Enterprise;
 using Storage.App.MVC.Domain.Core;
-using Storage.App.MVC.Models;
 using Storage.App.MVC.Domain.Enterprise;
 using System.Security.Claims;
 using Storage.App.MVC.Domain.Enterprise.UseCases;
+using Storage.App.MVC.Models.Enterprise;
 
 namespace Storage.App.MVC.UseCases.Enterprise
 {
@@ -41,10 +41,16 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
         public async Task<BaseResult> RunAsync(EnterpriseViewModel enterpriseViewModel, CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Begin - [CreateAdminIfNeeded.RunAsync]");
+
             var enterprise = _mapper.Map<EnterpriseEntity>(enterpriseViewModel);
 
             if (await _userStore.FindByNameAsync(enterpriseViewModel.Email, cancellationToken) is not null)
+            {
+                _logger.LogDebug("End - [CreateAdminIfNeeded.RunAsync] - User exists");
+
                 return _response.AsError("User exists");
+            }
 
             await _userStore.SetUserNameAsync(enterprise, enterpriseViewModel.Email, cancellationToken);
 
@@ -54,16 +60,12 @@ namespace Storage.App.MVC.UseCases.Enterprise
             {
                 var errors = userManagerResult.Errors.Select(error => error.Description);
 
-                _logger.LogWarning("Error creating account", new { errors });
+                _logger.LogWarning("End - [CreateAdminIfNeeded.RunAsync] - Error creating account", new { errors });
 
                 return _response.AsError(errors.ToList());
             }
 
-            var userClaims = enterprise.GenerateClaims().ToList();
-
-            userClaims.Remove(userClaims.FirstOrDefault(c => c.ValueType == "UserType"));
-
-            userClaims.Add(new Claim("UserType", "Admin"));
+            var userClaims = enterprise.GenerateClaims("Admin").ToList();
 
             await _userManager.AddClaimsAsync(enterprise, userClaims);
 
@@ -73,7 +75,7 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
                 await _userManager.DeleteAsync(enterprise);
 
-                _logger.LogWarning("Error creating account", new { errors });
+                _logger.LogWarning("End - [CreateAdminIfNeeded.RunAsync] - Error creating account", new { errors });
 
                 return _response.AsError(errors.ToList());
             }
@@ -82,7 +84,7 @@ namespace Storage.App.MVC.UseCases.Enterprise
 
             if (!await _uow.SaveChangesAsync())
             {
-                _logger.LogError("Error saving on database");
+                _logger.LogError("End - [CreateAdminIfNeeded.RunAsync] - Error saving on database");
 
                 await _userManager.RemoveClaimsAsync(enterprise, userClaims);
 
@@ -92,6 +94,8 @@ namespace Storage.App.MVC.UseCases.Enterprise
             }
 
             _logger.LogInformation("User created");
+
+            _logger.LogDebug("End - [CreateAdminIfNeeded.RunAsync]");
 
             return _response.AsSuccess();
         }
